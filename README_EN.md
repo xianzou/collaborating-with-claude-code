@@ -80,6 +80,16 @@ If Claude output contains `OK_MARKER` as a standalone line, the bridge returns o
 
 For a more complete parameter reference and multi-turn session usage, see `SKILL.md`.
 
+## Recommended collaboration pattern
+
+- A Claude worker should usually have one clear objective. Do not mix multiple sub-tasks into a single worker prompt.
+- Treat completion signals separately from natural-language output.
+  - For automation, prefer hard markers such as `--extract-exact "TASK_DONE"`.
+  - For human review, keep the natural-language result.
+- Do not treat bridge-level `success: true` as task acceptance.
+  - It only means the bridge call itself succeeded.
+  - Final acceptance should still come from the supervising layer after diff inspection, test execution, and result review.
+
 ## Runtime status output (`stderr`)
 
 - While the bridge is running, it streams Claude assistant text to `stderr` by default (so you can see progress), and prints `session_id=...` once.
