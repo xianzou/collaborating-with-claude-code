@@ -18,6 +18,8 @@
         - 然后bridge script 会用相同的session_id自动发送很短的继续指令，让它进行下一步
     - 通过这种方法，可以最大限度地兼容通过各类Anthropic-compatible proxy API运行的claude code.
 3. 将claude code的assistant文本实时输出到stderr，便于用户以及codex实时跟踪查看进度。
+4. 支持 `--extract-exact`，适合自动化场景下从较长模型回复中严格提取单个标记结果。
+5. 在 Windows 下默认尝试隐藏 `claude` 子进程控制台窗口，减少额外弹出的 `cmd` 窗口。
 
 ## 安装到 `~/.codex/skills/`
 
@@ -68,6 +70,14 @@ python <script_loc> --cd "/path/to/repo" --PROMPT "Review the auth flow for bypa
 python <script_loc> --no-full-access --cd "/path/to/repo" --PROMPT "Review the auth flow and list issues (no code changes)."
 ```
 
+自动化严格提取单个标记：
+
+```bash
+python <script_loc> --no-full-access --cd "/path/to/repo" --extract-exact "OK_MARKER" --PROMPT "Fully understand the repo first. Reply with exactly OK_MARKER."
+```
+
+如果 Claude 输出里能找到独立一行的 `OK_MARKER`（允许其余解释文字同时存在），bridge 会仅返回该标记；否则直接返回 `success: false`，避免自动流程误判。
+
 更完整的参数说明与多轮会话用法见 `SKILL.md`。
 
 ## 运行状态输出（stderr）
@@ -78,7 +88,7 @@ python <script_loc> --no-full-access --cd "/path/to/repo" --PROMPT "Review the a
 
 ## 兼容性
 
-已经在codex v0.87, v0.98, v0.101.0, claude code v2.1.11, v2.1.12, v2.1.25 测试通过.
+已经在 codex v0.87, v0.98, v0.101.0，claude code v2.1.11, v2.1.12, v2.1.25, v2.1.104 测试通过。
 
 ## License
 
