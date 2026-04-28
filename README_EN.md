@@ -18,6 +18,8 @@ Compared to other similar skills / collaboration workflows, this skill has the f
         - Then the bridge script automatically sends a short “continue” instruction using the same `session_id` to let it proceed to the next step.
     - This approach maximizes compatibility when running Claude Code via various Anthropic-compatible proxy APIs.
 3. It streams Claude Code's assistant text to `stderr` in real-time, making it easier for users and Codex to track progress.
+4. It supports `--extract-exact`, which is useful in automation flows that need to extract one exact marker from a longer model response.
+5. On Windows, it tries to hide the spawned `claude` console window by default to reduce extra `cmd` popups.
 
 ## Install to `~/.codex/skills/`
 
@@ -68,6 +70,14 @@ Read-only review (avoid editing files / running commands):
 python <script_loc> --no-full-access --cd "/path/to/repo" --PROMPT "Review the auth flow and list issues (no code changes)."
 ```
 
+Strict extraction of a single marker for automation:
+
+```bash
+python <script_loc> --no-full-access --cd "/path/to/repo" --extract-exact "OK_MARKER" --PROMPT "Fully understand the repo first. Reply with exactly OK_MARKER."
+```
+
+If Claude output contains `OK_MARKER` as a standalone line, the bridge returns only that marker in `agent_messages`; otherwise it returns `success: false` to avoid silent misclassification in automation.
+
 For a more complete parameter reference and multi-turn session usage, see `SKILL.md`.
 
 ## Runtime status output (`stderr`)
@@ -78,7 +88,7 @@ For a more complete parameter reference and multi-turn session usage, see `SKILL
 
 ## Compatibility
 
-Tested on codex v0.87, v0.98, v0.101.0, claude code v2.1.11, v2.1.12, v2.1.25.
+Tested on codex v0.87, v0.98, v0.101.0, claude code v2.1.11, v2.1.12, v2.1.25, v2.1.104.
 
 ## License
 
