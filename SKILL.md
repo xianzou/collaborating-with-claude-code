@@ -31,6 +31,16 @@ Claude Code often needs **1–2+ minutes** per task.
 - Always review claude code's responses (or changes it makes) and make sure they are correct, constructive and complete.
 - When claude code asks clarifying questions in a multi-turn session, always respond to its questions in that session based on current situation.
 
+## Operational rules
+
+- Give one Claude worker one clear objective. Do not mix multiple sub-tasks into a single worker prompt.
+- Separate human-readable results from machine-readable completion signals.
+  - For automation or orchestration, prefer `--extract-exact "TASK_DONE"`-style markers.
+  - For human review, keep natural-language output and review it directly.
+- Never treat bridge-level `success: true` as task acceptance.
+  - It only means the bridge call completed successfully.
+  - Final acceptance still belongs to the supervising agent, which should inspect diffs, run tests, and review the result.
+
 ## Default
 
 - **full access** (`--full-access`): use only in trusted repos/directories.
