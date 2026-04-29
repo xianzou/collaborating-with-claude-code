@@ -33,7 +33,7 @@ mkdir -p ~/.codex/skills
 
 ```bash
 cd ~/.codex/skills
-git clone https://github.com/ZhenHuangLab/collaborating-with-claude-code.git collaborating-with-claude-code
+git clone https://github.com/xianzou/collaborating-with-claude-code.git collaborating-with-claude-code
 ```
 
 3) Verify the file structure (it should include at least `SKILL.md` and `scripts/`):
