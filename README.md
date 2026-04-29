@@ -94,7 +94,7 @@ mkdir -p ~/.codex/skills
 
 ```bash
 cd ~/.codex/skills
-git clone https://github.com/ZhenHuangLab/collaborating-with-claude-code.git collaborating-with-claude-code
+git clone https://github.com/xianzou/collaborating-with-claude-code.git collaborating-with-claude-code
 ```
 
 3) 验证文件结构（至少应包含 `SKILL.md` 和 `scripts/`）：
